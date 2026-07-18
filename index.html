@@ -1,55 +1,72 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="description" content="Eaglercraft 1.12 test directory HTML page" />
-		<meta name="keywords" content="eaglercraft, eaglercraftx, minecraft, 1.12, 1.12.2" />
-		<title>Eaglercraft 1.12</title>
-		<meta property="og:locale" content="en-US" />
-		<meta property="og:type" content="website" />
-		<meta property="og:title" content="Eaglercraft 1.12" />
-		<meta property="og:description" content="test directory HTML page" />
-		<link type="image/png" rel="shortcut icon" href="favicon.png" />
-		<script type="text/javascript" src="ModAPI.js"></script>
-                <script type="text/javascript" src="ModLoader.js"></script>
-		<script type="text/javascript" src="ModGUI.js"></script>
-		<script type="text/javascript" src="anvil.js"></script>
-		<script type="text/javascript" src="classes.js"></script>
-		<script type="text/javascript">
-			"use strict";
-			window.addEventListener("load", () => {
-				if(document.location.href.startsWith("file:")) {
-					alert("HTTP please, do not open this file locally, run a local HTTP server and load it via HTTP");
-				}else {
-					const relayId = Math.floor(Math.random() * 3);
-					window.eaglercraftXOpts = {
-						demoMode: false,
-						container: "game_frame",
-						assetsURI: "assets.epk",
-						localesURI: "lang/",
-						worldsDB: "worlds",
-						logInvalidCerts: true,
-						servers: [
-							{ addr: "wss://mc.arch.lol", name: "ArchMC" }
-						],
-						relays: [
-							{ addr: "wss://devplus-replit.replit.app/", comment: "DevevolperPlus Official Relay", primary: relayId == 0 }
-						]
-					};
-					
-					var q = window.location.search;
-					if(typeof q === "string" && q.startsWith("?")) {
-						q = new URLSearchParams(q);
-						var s = q.get("server");
-						if(s) window.eaglercraftXOpts.joinServer = s;
-					}
-					
-					main();
-				}
-			});
-		</script>
-	</head>
-	<body style="margin:0px;width:100vw;height:100vh;overflow:hidden;" id="game_frame">
-	</body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkyWild Client - Eaglercraft 1.12.2</title>
+    <link type="image/png" rel="shortcut icon" href="favicon.png" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0a0a12; overflow: hidden; }
+        #loading {
+            display: flex; align-items: center; justify-content: center;
+            height: 100vh; color: #e2e8f0; font-family: system-ui;
+            flex-direction: column; gap: 1rem;
+        }
+        #loading h1 {
+            font-size: 2rem; font-weight: bold;
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .bar { width: 200px; height: 4px; background: #1a1a2e; border-radius: 2px; overflow: hidden; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, #7c3aed, #06b6d4); 
+            animation: load 1.5s ease infinite; background-size: 200% 100%; }
+        @keyframes load { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+    </style>
+    <script type="text/javascript" src="classes.js"></script>
+    <script type="text/javascript">
+        "use strict";
+        window.addEventListener("load", () => {
+            const relayId = Math.floor(Math.random() * 3);
+            window.eaglercraftXOpts = {
+                demoMode: false,
+                container: "game_frame",
+                assetsURI: "assets.epk",
+                localesURI: "lang/",
+                worldsDB: "skywild_worlds",
+                resourcePacksDB: "skywild_packs",
+                logInvalidCerts: true,
+                enableDownloadOfflineButton: true,
+                downloadOfflineButtonLink: null,
+                html5CursorSupport: true,
+                forceWebGL2: true,
+                deobfStackTraces: false,
+                servers: [
+                    { addr: "wss://mc.arch.lol", name: "ArchMC" }
+                ],
+                relays: [
+                    { addr: "wss://relay.deev.is/", comment: "Relay #1", primary: relayId == 0 },
+                    { addr: "wss://relay.lax1dude.net/", comment: "Relay #2", primary: relayId == 1 },
+                    { addr: "wss://relay.shhnowisnottheti.me/", comment: "Relay #3", primary: relayId == 2 }
+                ]
+            };
+            var q = window.location.search;
+            if(typeof q === "string" && q.startsWith("?")) {
+                q = new URLSearchParams(q);
+                var s = q.get("server");
+                if(s) window.eaglercraftXOpts.joinServer = s;
+            }
+            var loadEl = document.getElementById("loading");
+            if(loadEl) loadEl.remove();
+            main();
+        });
+    </script>
+</head>
+<body style="margin:0;width:100vw;height:100vh;overflow:hidden;" id="game_frame">
+    <div id="loading">
+        <h1>⚡ SkyWild</h1>
+        <p style="color:#94a3b8;font-size:0.9rem;">Loading Eaglercraft 1.12.2...</p>
+        <div class="bar"><div class="bar-fill"></div></div>
+    </div>
+</body>
 </html>
